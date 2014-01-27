@@ -1,0 +1,195 @@
+\documentclass[a4paper,11pt]{jsarticle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%恒例
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath,cases,amssymb}
+\usepackage{braket}
+\allowdisplaybreaks %次ページに渡る数式許可
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%定理環境
+\usepackage{amsthm}
+
+\newtheorem{Def}{定義}
+\newtheorem{Th}{定理}
+\newtheorem{Cor}[Th]{系}
+\newtheorem{Lem}[Th]{補題}
+\newtheorem{Prop}{命題}
+
+\newtheorem{eg}{例}[section]
+\newtheorem{prob}{問題}
+\newtheorem{property}{性質}
+
+\newsavebox{\probbox}
+\newcommand{\EndIt}{}
+
+\newenvironment{barred}[2][]{%
+  \renewcommand{\EndIt}{\end{#2}}%
+  \begin{#2}#1\noindent\newline
+  \begin{lrbox}{\probbox}%
+  \addtolength{\linewidth}{-12pt}%
+  \begin{minipage}[t]{\linewidth}%
+  \nointerlineskip
+}{%
+  \par
+  \xdef\ResetDepth{\prevdepth=\the\prevdepth\relax}%
+  \unskip\unskip\unpenalty
+  \end{minipage}%
+  \end{lrbox}%
+  \noindent
+  \makebox[\columnwidth]{%
+    \hfill\vrule\hspace{2pt}\vrule\hfill
+    \usebox{\probbox}}%
+  \EndIt
+  \ResetDepth
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%A4を広く使う
+\setlength{\topmargin}{-20pt}
+\setlength{\textheight}{20cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%図表式番号表示の書き換え
+\makeatletter
+ \renewcommand{\theequation}{%
+   \arabic{equation}}
+  \@addtoreset{equation}{section}
+ \makeatother
+
+\makeatletter
+ \renewcommand{\thefigure}{%
+   \arabic{figure}}
+  \@addtoreset{figure}{section}
+ \makeatother
+
+
+\makeatletter
+ \renewcommand{\thetable}{%
+   \arabic{table}}
+  \@addtoreset{table}{section}
+ \makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ページ番号
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\pagestyle{fancy}
+
+\lhead{}
+\chead{}
+\rhead{}
+
+\cfoot{}
+\rfoot{\thepage{}/{}\pageref{LastPage}}
+
+\renewcommand{\headrulewidth}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%送り仮名(ルビ)\ruby{漢字}{かんじ}
+\newcommand{\ruby}[2]{%
+\leavevmode
+\setbox0=\hbox{#1}%
+\setbox1=\hbox{\tiny #2}%
+\ifdim\wd0>\wd1 \dimen0=\wd0 \else \dimen0=\wd1 \fi
+\hbox{%
+\kanjiskip=0pt plus 2fil
+\xkanjiskip=0pt plus 2fil
+\vbox{%
+\hbox to \dimen0{%
+\tiny \hfil#2\hfil}%
+\nointerlineskip
+\hbox to \dimen0{\mathstrut\hfil#1\hfil}}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%自己定義
+\newcommand{\C}[1]{\quad\cdots\text{#1}}	%式に説明文&\C{explain}
+\newcommand{\tr}{\text{tr}}	%トレース\tr
+\newcommand{\identity}{\mbox{1}\hspace{-0.25em}\mbox{l}}	%恒等演算子\identity
+\newcommand{\Slash}[1]{{\ooalign{\hfil$#1$\hfil\crcr\raise.167ex\hbox{/}}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%最終行にのみ式番号を振る alignL 環境
+\makeatletter
+\def\alignL{\csname align*\endcsname}
+\def\endalignL{\refstepcounter{equation}\tag{\number\c@equation}%
+  \csname endalign*\endcsname}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{barred}[フィボナッチ数の一般項]{Prop}
+フィボナッチ数の一般項は$\phi = \frac{1 + \sqrt{5}}{2}, \psi = \frac{1 - \sqrt{5}}{2}$として
+\begin{align}
+F_n = \frac{\phi^n + \psi^n}{\sqrt{5}}
+\end{align}
+と書ける。
+\end{barred}
+\begin{proof}
+略。ググったら簡単に出てくる。
+\end{proof}
+
+\begin{barred}[フィボナッチ数]{Prop}
+$F_n$は$\frac{\phi^n}{\sqrt{5}}$に最も近い整数
+\end{barred}
+
+\begin{proof}
+\begin{align}
+&F_nは\frac{\phi^n}{\sqrt{5}}に最も近い整数\\
+\Leftrightarrow& F_n = \left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] ( [] はガウス記号 ) \\
+\Leftrightarrow& F_n は \left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] -1 < F_n < \left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] + 1 を満たす整数
+\label{proof}
+\end{align}
+
+(i) $n = 2\bold{\mathcal{N}}$のとき
+
+$0<\frac{\psi^n}{\sqrt{5}}<1/2$より
+\begin{align}
+\left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] -1
+ &= \left[ \frac{\phi^n}{\sqrt{5}} - \frac{1}{2} \right]
+ \le \frac{\phi^n}{\sqrt{5}} - \frac{1}{2} \\
+ &< \frac{\phi^n}{\sqrt{5}} - \frac{\psi^n}{\sqrt{5}} = F_n\\
+ &< \frac{\phi^n}{\sqrt{5}}
+ \le \left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] + 1
+\end{align}
+より式\eqref{proof}が成立。
+
+(ii) $n = 2\bold{\mathcal{N}} - 1$のとき
+
+$-1/2<\frac{\psi^n}{\sqrt{5}}<0$より
+\begin{align}
+\left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] -1
+ &\le \frac{\phi^n}{\sqrt{5}} \\
+ &< \frac{\phi^n}{\sqrt{5}} - \frac{\psi^n}{\sqrt{5}} = F_n\\
+ &< \frac{\phi^n}{\sqrt{5}} + \frac{1}{2}
+ \le \left[ \frac{\phi^n}{\sqrt{5}} + \frac{1}{2} \right] + 1
+\end{align}
+より式\eqref{proof}が成立。
+
+(i), (ii)より$\forall n \in \mathcal{N}$に対し式\eqref{proof}が成立する i.e. $F_n$は$\frac{\phi^n}{\sqrt{5}}$に最も近い整数
+\end{proof}
+
+\begin{proof}
+別証。
+\begin{align}
+&F_nは\frac{\phi^n}{\sqrt{5}}に最も近い整数\\
+\Leftrightarrow& \left| F_n - \frac{\phi^n}{\sqrt{5}} \right| < \frac{1}{2}
+\end{align}
+示せば良い。
+\begin{align}
+\left| F_n - \frac{\phi^n}{\sqrt{5}} \right|
+= \left| \frac{\psi^n}{\sqrt{5}} \right|
+< \frac{\psi^0}{\sqrt{5}}
+< \frac{1}{2}
+\end{align}
+
+\end{proof}
+
+\end{document}
