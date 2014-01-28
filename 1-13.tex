@@ -128,7 +128,7 @@
 \begin{barred}[フィボナッチ数の一般項]{Prop}
 フィボナッチ数の一般項は$\phi = \frac{1 + \sqrt{5}}{2}, \psi = \frac{1 - \sqrt{5}}{2}$として
 \begin{align}
-F_n = \frac{\phi^n + \psi^n}{\sqrt{5}}
+F_n = \frac{\phi^n - \psi^n}{\sqrt{5}}
 \end{align}
 と書ける。
 \end{barred}
@@ -181,8 +181,9 @@ $-1/2<\frac{\psi^n}{\sqrt{5}}<0$より
 \begin{align}
 &F_nは\frac{\phi^n}{\sqrt{5}}に最も近い整数\\
 \Leftrightarrow& \left| F_n - \frac{\phi^n}{\sqrt{5}} \right| < \frac{1}{2}
+\label{another_proof}
 \end{align}
-示せば良い。
+より式\eqref{another_proof}を示せばよい。
 \begin{align}
 \left| F_n - \frac{\phi^n}{\sqrt{5}} \right|
 = \left| \frac{\psi^n}{\sqrt{5}} \right|
