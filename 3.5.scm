@@ -38,5 +38,5 @@
 (define (estimate-pi trials)
   (estimate-integral plot-in-circle -1 1 -1 1 trials)
   )
-(print (estimate-pi 100000))
+(print (estimate-pi 10000000.0))
 
