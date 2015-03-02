@@ -30,9 +30,15 @@
 (define acc (make-account 100 'secret-password))
 (print ((acc 'secret-password 'withdraw) 10))
 
+(print 'copy-acc1)
 (define copy-acc (make-joint acc 'secret-password 'my-password))
 (print ((copy-acc 'secret-password 'withdraw) 10))
 (print ((copy-acc 'my-password 'withdraw) 10))
 
+(print 'copy-acc2)
+(define copy-acc2 (make-joint copy-acc 'my-password 'foobar))
+(print ((copy-acc2 'foobar 'withdraw) 10))
+
+(print 'invalid)
 (define invalid-acc (make-joint acc 'invalid-password 'my-password))
 (print ((invalid-acc 'my-password 'withdraw) 10))
