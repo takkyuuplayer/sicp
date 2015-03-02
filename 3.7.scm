@@ -11,14 +11,14 @@
     (cond ((not (eq? p password)) (lambda (args...) "Incorrect password"))
           ((eq? m 'withdraw) withdraw)
           ((eq? m 'deposit) deposit)
-          ((eq? m 'identify) (eq? pwd password))
+          ((eq? m 'identify) (eq? p password))
           (else (error "Unknown request -- MAKE-ACCOUNT"
                        m))))
   dispatch)
 
 ; 3.7
 (define (make-joint account orig-pass password)
-  (if (account 'origpass 'identify)
+  (if (account orig-pass 'identify)
     (lambda (p m)
       (cond ((not (eq? p password)) (lambda (args...) "Incorrect password"))
             (else (account orig-pass m))
