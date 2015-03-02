@@ -1,10 +1,8 @@
 (define (create-f)
-  ((lambda ()
-    (define ans 1)
-    (lambda (x)
-      (set! ans (* ans x))
-      ))
-  ))
+  (define ans 1)
+  (lambda (x)
+    (set! ans (* ans x)))
+  )
 
 ; from left
 (define f (create-f))
