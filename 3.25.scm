@@ -14,8 +14,8 @@
         ))
     )
   (let ((local-table (list '*table*)))
-    (define (lookup key-1 key-2)
-      (let ((record (assoc-down (list key-1 key-2) local-table)))
+    (define (lookup keys)
+      (let ((record (assoc-down keys local-table)))
         (if record
           (cdr record)
               )))
@@ -45,8 +45,8 @@
   )
 ((origin-table 'insert-proc!) 'row1 'col1 'val1-1)
 ((origin-table 'insert-proc!) 'row1 'col2 'val1-2)
-(print ((origin-table 'lookup-proc) 'row1 'col1))
-(print ((origin-table 'lookup-proc) 'row1 'col2))
+(print ((origin-table 'lookup-proc) (list 'row1 'col1)))
+(print ((origin-table 'lookup-proc) (list 'row1 'col2)))
 
 (define mod3-table
   (make-table
@@ -55,8 +55,8 @@
   )
 ((mod3-table 'insert-proc!) 0 0 'val0-0)
 ((mod3-table 'insert-proc!) 0 1 'val0-1)
-(print ((mod3-table 'lookup-proc) 0 0))
-(print ((mod3-table 'lookup-proc) 0 3))
+(print ((mod3-table 'lookup-proc) (list 0 0)))
+(print ((mod3-table 'lookup-proc) (list 0 3)))
 
 
 
