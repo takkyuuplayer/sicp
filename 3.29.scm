@@ -1,5 +1,7 @@
 * or-gate
 
+![q3.29](https://raw.githubusercontent.com/takkyuuplayer/sicp/master/img/q3.29.png)
+
 ```scm
 (define (or-gate i1 i2 o)
   ((let ((c1 (make-wire))
