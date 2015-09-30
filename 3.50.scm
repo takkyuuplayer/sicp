@@ -5,6 +5,10 @@
                 ((_ a b) (cons a (delay b)))))
 (define (stream-car stream) (car stream))
 (define (stream-cdr stream) (force (cdr stream)))
+(define (stream-ref s n)
+  (if (= n 0)
+    (stream-car s)
+    (stream-ref (stream-cdr s) (- n 1))))
 
 
 (define (stream-enumerate-interval low high)
@@ -18,15 +22,17 @@
 (define (stream-map proc . argstreams)
   (if (stream-null? (car argstreams))
     the-empty-stream
-    (cons
+    (cons-stream
       (apply proc (map stream-car argstreams))
       (apply stream-map
              (cons proc (map stream-cdr argstreams))))))
 
 ; test
-(map print
+(define each-sum-stream
     (stream-map +
                 (stream-enumerate-interval 1 10)
                 (stream-enumerate-interval 11 20)
-    )
-    )
+    ))
+(print (stream-ref each-sum-stream 0))
+(print (stream-ref each-sum-stream 5))
+(print (stream-ref each-sum-stream 9))
