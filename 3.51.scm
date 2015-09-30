@@ -18,7 +18,6 @@
       low
       (stream-enumerate-interval (+ low 1) high))))
 
-; 3.50
 (define (stream-map proc . argstreams)
   (if (stream-null? (car argstreams))
     the-empty-stream
@@ -27,13 +26,13 @@
       (apply stream-map
              (cons proc (map stream-cdr argstreams))))))
 
-; test
-(define each-sum-stream
-    (stream-map +
-                (stream-enumerate-interval 1 10)
-                (stream-enumerate-interval 11 20)
-    ))
-(print (stream-ref each-sum-stream 0))
-(print (stream-ref each-sum-stream 5))
-(print (stream-ref each-sum-stream 9))
-(print (stream-ref each-sum-stream 0))
+; 3.51
+(define (show x)
+    (print x)
+      x)
+(define x (stream-map show (stream-enumerate-interval 0 10)))
+(stream-ref x 5)
+(print "-------")
+(stream-ref x 7)
+(print "-------")
+(stream-ref x 5)
