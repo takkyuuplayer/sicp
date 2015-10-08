@@ -1,3 +1,6 @@
+(use slib)
+(require 'trace)
+
 (define stream-null? null?)
 (define the-empty-stream '())
 ( define (memo-proc proc)
@@ -9,19 +12,18 @@
                       result)
                result))))
 (define (delay-l a)
-  (memo-proc (lambda () a))
+  (lambda () a)
   )
 (define-syntax cons-stream
   (syntax-rules ()
-                ((_ a b) (cons a (delay-l b)))))
+                ((_ a b) (cons a (delay b)))))
 (define (stream-car stream) (car stream))
-(define (stream-cdr stream) (force-l (cdr stream)))
+(define (stream-cdr stream) (force (cdr stream)))
 (define (force-l a) (a))
 (define (stream-ref s n)
   (if (= n 0)
     (stream-car s)
     (stream-ref (stream-cdr s) (- n 1))))
-
 
 (define (stream-enumerate-interval low high)
   (if (> low high)
@@ -40,7 +42,7 @@
 
 
 (define (stream-map proc . argstreams)
-  (if (stream-null? (car argstreams))
+  (if (stream-null? (stream-car argstreams))
     the-empty-stream
     (cons-stream
       (apply proc (map stream-car argstreams))
@@ -68,13 +70,14 @@
 (define (accum x)
   (set! sum (+ x sum))
   sum)
+(trace accum)
 
 (define seq (stream-map accum (stream-enumerate-interval 1 20)))
+(print "-------")
 (define y (stream-filter even? seq))
-(define z (stream-filter (lambda (x) (= (remainder x 5) 0))
-                         seq))
-
+(print "-------")
+(define z (stream-filter (lambda (x) (= (remainder x 5) 0)) seq))
+(print "-------")
 (stream-ref y 7)
-
-(display-stream z)
+(print "-------")
 (display-line sum)
