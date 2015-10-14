@@ -54,8 +54,6 @@
     (stream-map (lambda (x) (* x factor)) stream))
 
 ; merge test
-(define scale-stream-2 (cons-stream 1 (scale-stream scale-stream-2 2)))
-(define scale-stream-3 (cons-stream 1 (scale-stream scale-stream-3 3)))
 (define (merge s1 s2)
   (cond ((stream-null? s1) s2)
         ((stream-null? s2) s1)
@@ -71,17 +69,17 @@
                                  (merge (stream-cdr s1)
                                         (stream-cdr s2)))))))))
 
-(define t (merge scale-stream-2 scale-stream-3))
-(print (stream-ref t 0))
-(print (stream-ref t 1))
-(print (stream-ref t 2))
-(print (stream-ref t 3))
-(print (stream-ref t 4))
-(print (stream-ref t 5))
-(print (stream-ref t 6))
-(print (stream-ref t 7))
-(print (stream-ref t 8))
-(print (stream-ref t 9))
-(print (stream-ref t 10))
+(define S (cons-stream 1 (merge (scale-stream S 2) (merge (scale-stream S 3) (scale-stream S 5)))))
+(print (stream-ref S 0))
+(print (stream-ref S 1))
+(print (stream-ref S 2))
+(print (stream-ref S 3))
+(print (stream-ref S 4))
+(print (stream-ref S 5))
+(print (stream-ref S 6))
+(print (stream-ref S 7))
+(print (stream-ref S 8))
+(print (stream-ref S 9))
+(print (stream-ref S 10))
 
 ; 3.56
