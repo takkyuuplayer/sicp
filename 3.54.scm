@@ -1,6 +1,3 @@
-(use slib)
-(require 'trace)
-
 (define stream-null? null?)
 (define the-empty-stream '())
 ( define (memo-proc proc)
@@ -51,9 +48,16 @@
 (define (add-streams s1 s2)
     (stream-map + s1 s2))
 
-; 3.53
-(define s (cons-stream 1 (add-streams s s)))
-(print (stream-ref s 0)) ; 1
-(print (stream-ref s 1)) ; 2
-(print (stream-ref s 2)) ; 4
-(print (stream-ref s 3)) ; 8
+(define ones (cons-stream 1 ones))
+(define integers (cons-stream 1 (add-streams ones integers)))
+
+; 3.54 mul-streams
+(define (mul-streams s1 s2)
+    (stream-map * s1 s2))
+
+(define factorials (cons-stream 1 (mul-streams integers factorials)))
+(print (stream-ref factorials 0))
+(print (stream-ref factorials 1))
+(print (stream-ref factorials 2))
+(print (stream-ref factorials 3))
+(print (stream-ref factorials 4))
