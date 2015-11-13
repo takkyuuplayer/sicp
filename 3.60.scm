@@ -75,7 +75,7 @@
 (define (mul-series s1 s2)
   (cons-stream (* (stream-car s1) (stream-car s2)) ; (定数項)
                (add-streams
-                 (scale-stream (stream-cdr s2) (stream-car s1)) ; (s1 定数項) * (s2)
+                 (scale-stream (stream-cdr s2) (stream-car s1)) ; (s1 定数項) * (s2 の1次以降 ; s1 定数項× s2定数項は↑で出力済みなので無くす)
                  (mul-series s2 (stream-cdr s1))                ; (s1 の1次以降) * (s2)
                  )
                ))
