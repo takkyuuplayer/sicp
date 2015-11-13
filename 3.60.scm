@@ -68,14 +68,18 @@
 (define minus-ones (cons-stream -1 minus-ones))
 (define cosine-series (cons-stream 1 (mul-streams minus-ones (integrate-stream sine-series))))
 (define sine-series (cons-stream 0 (integrate-stream cosine-series)))
+(define (scale-stream stream factor)
+    (stream-map (lambda (x) (* x factor)) stream))
 
 ; 3.60
 (define (mul-series s1 s2)
-  (cons-stream (* (stream-car s1) (stream-car s2))
+  (cons-stream (* (stream-car s1) (stream-car s2)) ; (定数項)
                (add-streams
-                 (mul-streams s1 (stream-cdr s2))
-                 (mul-streams (stream-cdr s1) s2)
+                 (scale-stream (stream-cdr s2) (stream-car s1)) ; (s1 定数項) * (s2)
+                 (mul-series s2 (stream-cdr s1))                ; (s1 の1次以降) * (s2)
                  )
                ))
-(define confirm (mul-streams ones ones))
-(stream-head confirm 4)
+(define one (add-streams (mul-series sine-series sine-series)
+                         (mul-series cosine-series cosine-series)))
+(stream-head one 5)
+
