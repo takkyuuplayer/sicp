@@ -1,22 +1,4 @@
-(define stream-null? null?)
-(define the-empty-stream '())
-(define-syntax cons-stream
-  (syntax-rules ()
-                ((_ a b) (cons a (delay b)))))
-(define (stream-car stream) (car stream))
-(define (stream-cdr stream) (force (cdr stream)))
-(define (stream-ref s n)
-  (if (= n 0)
-    (stream-car s)
-    (stream-ref (stream-cdr s) (- n 1))))
-
-
-(define (stream-enumerate-interval low high)
-  (if (> low high)
-    the-empty-stream
-    (cons-stream
-      low
-      (stream-enumerate-interval (+ low 1) high))))
+(load "./lib/stream/base.scm")
 
 ; 3.50
 (define (stream-map proc . argstreams)
@@ -28,6 +10,13 @@
              (cons proc (map stream-cdr argstreams))))))
 
 ; test
+(define (stream-enumerate-interval low high)
+  (if (> low high)
+    the-empty-stream
+    (cons-stream
+      low
+      (stream-enumerate-interval (+ low 1) high))))
+
 (define each-sum-stream
     (stream-map +
                 (stream-enumerate-interval 1 10)
