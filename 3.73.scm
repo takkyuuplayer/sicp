@@ -15,13 +15,10 @@
 ; 3.73
 (define (rc R C dt)
   (define (circuit i v0)
-    (define v0s (cons-stream v0 v0s))
     (add-streams
-      v0s
-      (add-streams
-        (scale-stream (integral i 0 dt) (/ 1 C))
-        (scale-stream i R)
-    ))
+      (scale-stream (integral i v0 dt) (/ 1 C))
+      (scale-stream i R)
+      )
     )
   circuit
   )
