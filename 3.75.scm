@@ -24,6 +24,7 @@
                  (make-zero-crossings (stream-cdr input-stream)
                                       (stream-car input-stream)
                                       avpt))))
+(stream-head (make-zero-crossings sense-data 0 0) 10)
 
 ; last-value に avpt を渡してはいけない. 新しい信号の平均値は直前の"実測値"との平均を取らなければならない。
 ; 最後の実測値 `last-value` と (sign-change-detector) に渡すようの直前の平均値を渡す必要がある。　
