@@ -7,7 +7,6 @@
 (define integers (cons-stream 1 (add-streams ones integers)))
 
 (define (sign-change-detector after before)
-  (define (>= a b) (or (> a b) (= a b)))
   (cond ((and (>= before 0) (>= after 0)) 0)
         ((and (>= before 0) (< after 0)) -1)
         ((and (< before 0) (>= after 0) 1))
