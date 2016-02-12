@@ -1,7 +1,5 @@
-(use slib)
 (use srfi-27)
-(require 'trace)
- (random-source-randomize! default-random-source)
+(random-source-randomize! default-random-source)
 (define (random n)
   (* n (random-real))
   )
@@ -38,5 +36,4 @@
 (define (estimate-pi trials)
   (estimate-integral plot-in-circle -1 1 -1 1 trials)
   )
-(print (estimate-pi 10000000.0))
-
+(print (estimate-pi 100000.0))
