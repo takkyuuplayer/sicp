@@ -16,10 +16,7 @@
     (define (next m x)
       (if (eq? m 'generate) (rand-update x) m)
       )
-    (if (eq? m 'generate)
       (cons-stream random-init (stream-map next stream (random-numbers stream)))
-      (cons-stream m (stream-map next (stream-cdr stream) (random-numbers stream)))
-      )
     )
   )
 
@@ -27,11 +24,11 @@
 (define s0 (cons-stream 'generate s0))
 (define s1
   (cons-stream
-    367
+    'generate
     (cons-stream
-      'generate (cons-stream random-init s0))))
+      'generate (cons-stream 4457 s0))))
 
 (define rs0 (random-numbers s0))
 (define rs1 (random-numbers s1))
-(stream-head rs0 10)
+(stream-head rs0 20)
 (stream-head rs1 10)
