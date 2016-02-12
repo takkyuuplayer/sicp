@@ -12,13 +12,6 @@
   (let ((range (- high low)))
     (+ low (random range))))
 
-(define (plot-in-circle)
-  (let (
-        (x (random-in-range -1 1))
-        (y (random-in-range -1 1)))
-    (<= (+ (* x x) (* y y)) 1)
-    ))
-
 ; 3.82
 (define (monte-carlo-stream experiment-stream passed failed)
   (define (next passed failed)
@@ -38,6 +31,13 @@
   )
 
 ; test
+(define (plot-in-circle)
+  (let (
+        (x (random-in-range -1 1))
+        (y (random-in-range -1 1)))
+    (<= (+ (* x x) (* y y)) 1)
+    ))
+
 (define (plot-in-circle-stream) (cons-stream (plot-in-circle) (plot-in-circle-stream)))
 (define estimate-pi-stream (estimate-integral-stream (plot-in-circle-stream) -1 1 -1 1))
 (print (stream-ref estimate-pi-stream 10.0))
